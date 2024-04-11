@@ -15,9 +15,6 @@ class _BmiCalculatorState extends State<BmiCalculator> {
   Complexity selected = Complexity.simple;
   final Widget _gap = const SizedBox(height: 20);
 
-  var cm;
-  var inch;
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -44,11 +41,12 @@ class _BmiCalculatorState extends State<BmiCalculator> {
                             vertical: 16, horizontal: 20),
                         child: Text(
                           textAlign: TextAlign.center,
-                          'Your current BMI is ...',
+                          'Your current BMI is ',
                           style: GoogleFonts.roboto(
                             textStyle: const TextStyle(
                               color: Colors.black87,
                               fontWeight: FontWeight.bold,
+                              fontSize: 20,
                             ),
                           ),
                         ),
