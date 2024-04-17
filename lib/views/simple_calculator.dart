@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 enum MeasureHeightUnit { _cm, _in }
 
@@ -10,6 +11,8 @@ class SimpleCalculator extends StatefulWidget {
   @override
   State<SimpleCalculator> createState() => _SimpleCalculatorState();
 }
+
+String displayedBmi = 'No BMI yet';
 
 final _heightController = TextEditingController();
 final _weightController = TextEditingController();
@@ -34,23 +37,25 @@ String displayingWeightUnit() {
   }
 }
 
-double _calculateEuBmi(double weight, double height) {
-  double bmi = weight / (height * 2);
-  return bmi;
+_calculateEuBmi(double weight, double height) {
+  double bmi = weight / (pow((height / 100), 2));
+  print(bmi);
+  displayedBmi = bmi.toStringAsFixed(1);
 }
 
-double _calculateEnBmi(double weight, double height) {
-  double bmi = 703 * (weight / (height * 2));
-  return bmi;
+_calculateEnBmi(double weight, double height) {
+  double bmi = (703 * weight) / (pow(height, 2));
+  print(bmi);
+  displayedBmi = bmi.toStringAsFixed(1);
 }
 
 displayBmi(double height, double weight) {
   if (_selectedHeightUnit == MeasureHeightUnit._cm &&
       _selectedWeightUnit == MeasureWeightUnit._kg) {
-    _calculateEuBmi(weight, height);
+    return _calculateEuBmi(weight, height);
   } else if (_selectedHeightUnit == MeasureHeightUnit._in &&
       _selectedWeightUnit == MeasureWeightUnit._lb) {
-    _calculateEnBmi(weight, height);
+    return _calculateEnBmi(weight, height);
   } else {
     _calculateEnBmi(weight, height);
   }
@@ -127,16 +132,20 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
         ),
         const SizedBox(height: 42),
         ElevatedButton(
-            onPressed: () {
+          onPressed: () {
+            setState(() {
               displayBmi(
                 double.parse(_heightController.text),
                 double.parse(_weightController.text),
               );
-            },
-            child: const Text(
-              'Calculate!',
-              style: TextStyle(color: Colors.black, fontSize: 20),
-            ))
+            });
+          },
+          child: const Text(
+            'Calculate!',
+            style: TextStyle(color: Colors.black, fontSize: 20),
+          ),
+        ),
+        Text(displayedBmi),
       ],
     );
   }
