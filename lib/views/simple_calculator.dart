@@ -13,7 +13,7 @@ class SimpleCalculator extends StatefulWidget {
   State<SimpleCalculator> createState() => _SimpleCalculatorState();
 }
 
-String displayedBmi = 'No BMI set yet';
+String? displayedBmi;
 
 final _heightController = TextEditingController();
 final _weightController = TextEditingController();
@@ -58,7 +58,30 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
         _selectedWeightUnit == MeasureWeightUnit._lb) {
       return _calculateEnBmi(weight, height);
     } else {
-      _calculateEnBmi(weight, height);
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Invalid units'),
+          content: const Text(
+              'Please make sure that you choose corresponding units'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: const Text('Okay'),
+            )
+          ],
+        ),
+      );
+    }
+  }
+
+  String displayedValue() {
+    if (displayedBmi == null) {
+      return 'No BMI yet';
+    } else {
+      return 'Your current BMI is $displayedBmi';
     }
   }
 
@@ -156,7 +179,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                     const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
                 child: Text(
                   textAlign: TextAlign.center,
-                  'Your current BMI is $displayedBmi',
+                  displayedValue(),
                   style: GoogleFonts.roboto(
                     textStyle: const TextStyle(
                       color: Colors.black87,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/views/simple_calculator.dart';
 
 enum Complexity { complex, simple }
