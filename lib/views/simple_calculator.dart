@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:google_fonts/google_fonts.dart';
 
 enum MeasureHeightUnit { _cm, _in }
 
@@ -12,12 +13,13 @@ class SimpleCalculator extends StatefulWidget {
   State<SimpleCalculator> createState() => _SimpleCalculatorState();
 }
 
-String displayedBmi = 'No BMI yet';
+String displayedBmi = 'No BMI set yet';
 
 final _heightController = TextEditingController();
 final _weightController = TextEditingController();
 
-const Widget _gap = SizedBox(width: 40);
+const Widget _widthGap = SizedBox(width: 40);
+const Widget _heightGap = SizedBox(height: 40);
 MeasureHeightUnit _selectedHeightUnit = MeasureHeightUnit._cm;
 MeasureWeightUnit _selectedWeightUnit = MeasureWeightUnit._kg;
 
@@ -37,31 +39,29 @@ String displayingWeightUnit() {
   }
 }
 
-_calculateEuBmi(double weight, double height) {
-  double bmi = weight / (pow((height / 100), 2));
-  print(bmi);
-  displayedBmi = bmi.toStringAsFixed(1);
-}
-
-_calculateEnBmi(double weight, double height) {
-  double bmi = (703 * weight) / (pow(height, 2));
-  print(bmi);
-  displayedBmi = bmi.toStringAsFixed(1);
-}
-
-displayBmi(double height, double weight) {
-  if (_selectedHeightUnit == MeasureHeightUnit._cm &&
-      _selectedWeightUnit == MeasureWeightUnit._kg) {
-    return _calculateEuBmi(weight, height);
-  } else if (_selectedHeightUnit == MeasureHeightUnit._in &&
-      _selectedWeightUnit == MeasureWeightUnit._lb) {
-    return _calculateEnBmi(weight, height);
-  } else {
-    _calculateEnBmi(weight, height);
-  }
-}
-
 class _SimpleCalculatorState extends State<SimpleCalculator> {
+  _calculateEuBmi(double weight, double height) {
+    double bmi = weight / (pow((height / 100), 2));
+    displayedBmi = bmi.toStringAsFixed(1);
+  }
+
+  _calculateEnBmi(double weight, double height) {
+    double bmi = (703 * weight) / (pow(height, 2));
+    displayedBmi = bmi.toStringAsFixed(1);
+  }
+
+  displayBmi(double height, double weight) {
+    if (_selectedHeightUnit == MeasureHeightUnit._cm &&
+        _selectedWeightUnit == MeasureWeightUnit._kg) {
+      return _calculateEuBmi(weight, height);
+    } else if (_selectedHeightUnit == MeasureHeightUnit._in &&
+        _selectedWeightUnit == MeasureWeightUnit._lb) {
+      return _calculateEnBmi(weight, height);
+    } else {
+      _calculateEnBmi(weight, height);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -83,7 +83,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                 ),
               ),
             ),
-            _gap,
+            _widthGap,
             DropdownMenu(
               label: const Text('Unit'),
               dropdownMenuEntries: const [
@@ -115,7 +115,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                 ),
               ),
             ),
-            _gap,
+            _widthGap,
             DropdownMenu(
               label: const Text('Unit'),
               dropdownMenuEntries: const [
@@ -145,7 +145,30 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
             style: TextStyle(color: Colors.black, fontSize: 20),
           ),
         ),
-        Text(displayedBmi),
+        _heightGap,
+        Center(
+          child: Card(
+            child: SizedBox(
+              width: 760,
+              height: 60,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                child: Text(
+                  textAlign: TextAlign.center,
+                  'Your current BMI is $displayedBmi',
+                  style: GoogleFonts.roboto(
+                    textStyle: const TextStyle(
+                      color: Colors.black87,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }

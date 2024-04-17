@@ -12,6 +12,7 @@ class BmiCalculator extends StatefulWidget {
 }
 
 class _BmiCalculatorState extends State<BmiCalculator> {
+  String displayedBmi = 'No BMI yet';
   Complexity selected = Complexity.simple;
   final Widget _gap = const SizedBox(height: 20);
 
@@ -30,30 +31,6 @@ class _BmiCalculatorState extends State<BmiCalculator> {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                _gap,
-                Center(
-                  child: Card(
-                    child: SizedBox(
-                      width: 760,
-                      height: 60,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 16, horizontal: 20),
-                        child: Text(
-                          textAlign: TextAlign.center,
-                          'Your current BMI is ',
-                          style: GoogleFonts.roboto(
-                            textStyle: const TextStyle(
-                              color: Colors.black87,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
                 _gap,
                 SegmentedButton<Complexity>(
                   segments: const <ButtonSegment<Complexity>>[
