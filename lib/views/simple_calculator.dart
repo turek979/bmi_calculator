@@ -79,9 +79,9 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
 
   String displayedValue() {
     if (displayedBmi == null) {
-      return 'No BMI yet';
+      return 'No BMI calculated yet';
     } else {
-      return 'Your current BMI is $displayedBmi';
+      return 'Your current BMI is $displayedBmi !';
     }
   }
 
