@@ -5,7 +5,6 @@ void main() {
   return runApp(
     const MaterialApp(
       title: 'BMI Calculator',
-      debugShowCheckedModeBanner: false,
       home: BmiCalculator(),
     ),
   );
